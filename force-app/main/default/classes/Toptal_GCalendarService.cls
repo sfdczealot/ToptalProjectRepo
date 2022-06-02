@@ -57,7 +57,8 @@ public with sharing class Toptal_GCalendarService {
         Integration_Failure__c fail = new Integration_Failure__c();
         fail.Type__c = 'G-Calendar';
         fail.Failure_Code__c = String.valueOf(apiResponse.getStatusCode());
-        fail.Failure_Reason__c = 'G-Calendar Exception happened';
+        fail.Response_Body__c = String.valueOf(apiResponse.getBody());
+        fail.Failure_Reason__c = 'G-Calendar Exception happened for timeslot '+processCalendar.selectedTime +'on '+processCalendar.selectedDate +' for Dr.'+processCalendar.physicianName;
         insert fail;
         if(fail != null) {
             return fail;
@@ -101,8 +102,7 @@ public with sharing class Toptal_GCalendarService {
             Toptal_CalendarRequestWrapper requestWrapper = new Toptal_CalendarRequestWrapper();
             requestWrapper.startTime = getTimeSlot(createCalendarEvent, false);
             requestWrapper.endTime = getTimeSlot(createCalendarEvent, true);
-            System.debug('=========request==='+JSON.serialize(requestWrapper).replace('endTime', 'end1').replace('dateTime_Z', 'dateTime').replace('startTime', 'start'));
-            HttpResponse apiResponse = Toptal_Helper.postResponse('POST', Toptal_Helper.getCallOutURL(createCalendarEvent.physicianEmail),JSON.serialize(requestWrapper).replace('end_Z', 'end').replace('dateTime_Z', 'dateTime'));
+            HttpResponse apiResponse = Toptal_Helper.postResponse('POST', Toptal_Helper.getCallOutURL(createCalendarEvent.physicianEmail),JSON.serialize(requestWrapper).replace('endTime', 'end').replace('dateTime_Z', 'dateTime').replace('startTime', 'start'));
             if(apiResponse.getStatusCode() == 200 || apiResponse.getStatusCode() == 201){
                 calendarResponseDetails.statusCode = apiResponse.getStatusCode();
                 calendarResponseDetails.isEventCreated = true;
@@ -110,6 +110,7 @@ public with sharing class Toptal_GCalendarService {
             else{
                 calendarResponseDetails.statusCode = apiResponse.getStatusCode();
                 calendarResponseDetails.isEventCreated = false;
+                handleErrorResponse(apiResponse, createCalendarEvent);
             }
         }
         return calendarResponseDetails;

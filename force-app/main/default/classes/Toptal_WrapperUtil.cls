@@ -18,8 +18,6 @@ public with sharing class Toptal_WrapperUtil {
         public String phoneNumber{get; set;}
         @AuraEnabled
         public String patientAddress{get; set;}
-        @AuraEnabled
-        public String patientDescription{get; set;}
     }
 
     public class PatientCreationDetails {

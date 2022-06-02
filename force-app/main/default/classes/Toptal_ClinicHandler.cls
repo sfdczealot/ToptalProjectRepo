@@ -38,7 +38,7 @@ public with sharing class Toptal_ClinicHandler {
     public static String createAppointmentForOldPatient(String patientId, String physicianId){
         if(String.isNotBlank(patientId) && String.isNotBlank(physicianId)){
             try {
-                Appointment__c appointment = createAppointment(patientId,physicianId,'');            
+                Appointment__c appointment = createAppointment(patientId,physicianId);            
                 logAppointmentHistory(patientId, appointment.Id);
                 if(appointment != null) {
                     return [SELECT Id, Name FROM Appointment__c WHERE Id = :appointment.Id].Name;
@@ -57,17 +57,16 @@ public with sharing class Toptal_ClinicHandler {
     * @return Toptal_WrapperUtil.PatientCreationDetails - newly created patient details
     */
     @AuraEnabled
-    public static Toptal_WrapperUtil.PatientCreationDetails createAppointmentForNewPateint(Toptal_WrapperUtil.NewPatient newPatientDetails, String physicianId){
-        Toptal_WrapperUtil.PatientCreationDetails newAppt = new Toptal_WrapperUtil.PatientCreationDetails();
+    public static String createAppointmentForNewPatient(Toptal_WrapperUtil.NewPatient newPatientDetails, String physicianId){
         if(newPatientDetails != null) {
             Patient__c patient = createPatient(newPatientDetails);
-            Appointment__c appointment = createAppointment(patient.Id,physicianId,newPatientDetails.patientDescription);
-            newAppt.isPatientCreated = true;
-            newAppt.referenceNo = appointment.Name;
+            Appointment__c appointment = createAppointment(patient.Id,physicianId);
             LogAppointmentHistory(patient.Id, appointment.ID);
-            return newAppt;
+            if(appointment != null) {
+                return [SELECT Id, Name FROM Appointment__c WHERE Id = :appointment.Id].Name;
+            }
         }
-        return new Toptal_WrapperUtil.PatientCreationDetails();
+        return '';
     }
     
     /**
@@ -108,11 +107,10 @@ public with sharing class Toptal_ClinicHandler {
     * @param String - Email Id of the patient
     * @return Appointment__c - newly created appointment record
     */
-    public static Appointment__c createAppointment(String patientId,String physicianId,String problemDescription){
+    public static Appointment__c createAppointment(String patientId,String physicianId){
         Appointment__c appointment = new Appointment__c();
         appointment.Patient__c = patientId;
         appointment.Physician__c =  physicianId;
-        appointment.Problem_description__c = problemDescription;
         insert appointment;
         if(appointment != null) {
             return appointment;

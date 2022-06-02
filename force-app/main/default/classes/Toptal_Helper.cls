@@ -162,7 +162,7 @@ public with sharing class Toptal_Helper {
         String timeDiff ='';
         if(offSetHours.startsWith('+')){
             offSetHours = offSetHours.substring(1);
-            timeDiff = offSetHours +'.'+offSetTime.substring(3);
+            timeDiff = offSetHours +':'+offSetTime.substring(3);
         }
         return timeDiff ;
     }
