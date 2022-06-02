@@ -3,6 +3,7 @@ import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import fetchAppointmentScreenDetails from "@salesforce/apex/Toptal_ClinicHandler.fetchAppointmentScreenDetails";
 import fetchPatientDetails from "@salesforce/apex/Toptal_ClinicHandler.fetchPatientDetails";
 import createAppointmentForOldPatient from "@salesforce/apex/Toptal_ClinicHandler.createAppointmentForOldPatient";
+import createAppointmentForNewPatient from "@salesforce/apex/Toptal_ClinicHandler.createAppointmentForNewPatient";
 import fetchPhysicianCalendarEvents from "@salesforce/apex/Toptal_GCalendarService.fetchPhysicianCalendarEvents";
 import postEventToPhysicianCalendar from "@salesforce/apex/Toptal_GCalendarService.postEventToPhysicianCalendar";
 
@@ -67,6 +68,14 @@ export default class ToptalAppointmentBooking extends LightningElement {
     selectedTime:"",
     patientName:"",
     patientEmail:""
+  };
+
+  @track newPatientWrapper = {
+    name: "",
+    email:"",
+    age: "",
+    phoneNumber: "",
+    patientAddress:""
   };
 
   @wire(fetchAppointmentScreenDetails)
@@ -328,17 +337,27 @@ export default class ToptalAppointmentBooking extends LightningElement {
   handleExistingPatientAppointment(event) {
     this.openModal = true;
     this.apptmtForExistingPatient = true;
+    this.apptmtForNewPatient = false;
   }
 
   updateExistingPatient(event){
     let referenceNumber;
+    let isEventCreated;
     this.showSpinner = true;
     
 
     postEventToPhysicianCalendar({createCalendarEvent: this.calendarEventWrapper})
       .then((response) => {
         if(response) { 
-          console.log('====response==='+JSON.stringify(response));           
+          console.log('====response==='+JSON.stringify(response)); 
+          isEventCreated = response.isEventCreated;          
+        }
+        if(!isEventCreated){
+          this.showToast(
+            "Integration Error Occured.Please contact your administrator",
+            "Problem occured on fetching",
+            "error"
+          );
         }
         this.showSpinner =false;
       })
@@ -353,7 +372,9 @@ export default class ToptalAppointmentBooking extends LightningElement {
       })
       .finally(() => {
         console.log("executed");
-        this.createAppointmentForOldPatient(this.selectedPatientId,this.physiciansData.get(this.filteredData.physician).Id);
+        if(isEventCreated){
+          this.createAppointmentForOldPatient(this.selectedPatientId,this.physiciansData.get(this.filteredData.physician).Id);
+        }
       });
     
 
@@ -395,7 +416,98 @@ export default class ToptalAppointmentBooking extends LightningElement {
     this.existingPatient = false;
     this.newPatient = true;
     this.disableBooking = true;
+    this.secondPage = false;
 
+  }
+
+  handlePrevPageNavigation(event) {
+    this.existingPatient = event.detail.prevPage;
+    this.secondPage = event.detail.prevPage;
+    this.newPatient = false;
+    this.disableBooking = true;
+  }
+
+  handleNewPatientRecordCreation(event) {
+    this.openModal = true;
+    this.apptmtForNewPatient = true;
+    this.apptmtForExistingPatient = false;
+    this.calendarEventWrapper.patientName = event.detail.formValues.name;
+    this.calendarEventWrapper.patientEmail = event.detail.formValues.email;
+
+    this.newPatientWrapper = event.detail.formValues;
+  }
+
+  addPatient(event){
+    let referenceNumber;
+    let isEventCreated;
+    this.showSpinner = true;
+    
+
+    postEventToPhysicianCalendar({createCalendarEvent: this.calendarEventWrapper})
+      .then((response) => {
+        if(response) { 
+          isEventCreated = response.isEventCreated;          
+        }
+        if(!isEventCreated){
+          this.showToast(
+            "Integration Error Occured.Please contact your administrator",
+            "Problem occured on fetching",
+            "error"
+          );
+        }
+        this.showSpinner =false;
+      })
+      .catch((error) => {
+        console.log(error);
+        this.showSpinner = false;
+        this.showToast(
+          "There is no event",
+          "Problem occured on fetching",
+          "error"
+        );
+      })
+      .finally(() => {
+        console.log("executed");
+        if(isEventCreated){
+            this.createAppointmentForNewPatient(this.newPatientWrapper,this.physiciansData.get(this.filteredData.physician).Id);
+        }
+      });
+    
+
+  }
+
+  createAppointmentForNewPatient(newPatientWrapper,physicianId){
+    let referenceNumber;
+    createAppointmentForNewPatient({newPatientDetails: newPatientWrapper , 
+      physicianId :physicianId})
+      .then((response) => {
+        if(response) { 
+          console.log('====referencenoresponse==='+response); 
+          referenceNumber = response; 
+          console.log('====referenceno==='+referenceNumber); 
+          this.openModal = false; 
+          this.secondPage = false;   
+          this.isAppointmentCreated = true;
+          this.currentStep = '2';
+          this.newPatient = false;
+          this.successAlert(3500);
+          
+        }
+        this.showSpinner =false;
+      })
+      .catch((error) => {
+        console.log(error);
+        this.showSpinner = false;
+        this.showToast(
+          "There is no event",
+          "Problem occured on fetching",
+          "error"
+        );
+      })
+      .finally(() => {
+        console.log("executed");
+        this.referenceNo = referenceNumber;
+      });
   }
 
   closeModal() {

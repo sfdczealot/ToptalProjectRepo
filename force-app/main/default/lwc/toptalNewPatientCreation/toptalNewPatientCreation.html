@@ -1,5 +1,5 @@
 <template>
-    <template if:true={showPatientFrom}>
+    <template if:true={showpatientform}>
         <lightning-spinner alternative-text="loading..." size="large" if:true={loadSpinner} variant="brand">
         </lightning-spinner>
         <lightning-layout
@@ -30,7 +30,6 @@
                 </lightning-layout-item>
             </lightning-layout>
 
-
             <lightning-layout class="row row3 slds-grid slds-gutters">
                 <lightning-layout-item flexibility="auto" class="slds-col slds-size_1-of-2">
                     <label for="Patient Address">Address</label>
@@ -39,6 +38,18 @@
                 </lightning-layout-item>
 
             </lightning-layout>
+
+            <lightning-layout class="row row4 slds-grid slds-gutters  slds-align_absolute-center">
+                <lightning-layout-item flexibility="auto"
+                    class="slds-align_absolute-center slds-m-bottom_large slds-m-top_medium">
+                    <lightning-button variant="neutral" label="Back" onclick={goToOldPatientPage}
+                        class="slds-m-right_large">
+                    </lightning-button>
+                    <lightning-button variant="brand" label="Book Appointment" onclick={openPromptForCreate}>
+                    </lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+
         </lightning-layout>
     </template>
 </template>

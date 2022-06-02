@@ -1,0 +1,27 @@
+.inputForm lightning-input,.inputForm lightning-textarea{
+    margin-top: 10px;
+}
+
+.inputForm{
+    --sds-c-textarea-sizing-min-height: 120px;
+}
+
+.inputForm .row{
+    margin-bottom: 20px;
+    width: 85%;
+}
+
+@media only screen and (max-width: 940px){
+    
+ .row{
+     display: flex;
+     flex-direction: column;
+     width: 100% !important;
+ }
+
+ .row lightning-layout-item{
+     margin-bottom: 10px !important;
+     width: 100% !important;
+ }
+
+}

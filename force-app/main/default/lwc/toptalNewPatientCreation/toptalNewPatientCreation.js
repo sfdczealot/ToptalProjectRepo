@@ -1,9 +1,10 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from 'lwc';
 import { validateEmail } from 'c/utils';
 
 export default class ToptalNewPatientCreation extends LightningElement {
 
-    
+    @api showpatientform;
+
     loadSpinner = false;
     emailValid = '';
 
@@ -12,7 +13,11 @@ export default class ToptalNewPatientCreation extends LightningElement {
         age: '',
         phoneNumber: '',
         email: '',
-        address:''
+        address: ''
+    }
+
+    connectedCallback() {
+        console.log('value from parent###' + this.showpatientform);
     }
 
     handleInputChanges(event) {
@@ -20,43 +25,49 @@ export default class ToptalNewPatientCreation extends LightningElement {
     }
 
     openPromptForCreate() {
-
         let name = this.template.querySelector("lightning-input[data-id='name']");
         let age = this.template.querySelector("lightning-input[data-id='age']");
         let email = this.template.querySelector("lightning-input[data-id='email']");
-    
-        if(!this.newPatient.name){
-            name.setCustomValidity("Patient Name is Required");
-        }else name.setCustomValidity("");
-        name.reportValidity(); 
 
-        if(!this.newPatient.age){
+        if (!this.newPatient.name) {
+            name.setCustomValidity("Patient Name is Required");
+        } else name.setCustomValidity("");
+        name.reportValidity();
+
+        if (!this.newPatient.age) {
             age.setCustomValidity("Patient Age is Required");
-        }else age.setCustomValidity("");
+        } else age.setCustomValidity("");
         age.reportValidity();
 
         this.emailValid = validateEmail(this.newPatient.email);
         if (!this.newPatient.email) {
-        email.setCustomValidity("Patient Email is Required");
+            email.setCustomValidity("Patient Email is Required");
         } else if (this.emailValid == false && this.newPatient.email) {
-        email.setCustomValidity("Kindly enter valid Email Id");
+            email.setCustomValidity("Kindly enter valid Email Id");
         } else if (this.emailValid == true && this.newPatient.email) {
-        email.setCustomValidity("");
+            email.setCustomValidity("");
         }
         email.reportValidity();
-        
+
         if (this.newPatient.name && this.newPatient.age && this.newPatient.email && this.emailValid == true) {
-             this.dispatchEvent(new CustomEvent('formRecords', {
+            this.dispatchEvent(new CustomEvent('formrecords', {
                 detail: {
                     formValues: this.newPatient
                 }
             }));
         }
 
-    }  
+    }
+
+    goToOldPatientPage(event) {
+        this.dispatchEvent(new CustomEvent('gotopreviouspage', {
+            detail: {
+                prevPage: true
+            }
+        }));
+    }
 
 
-           
 
 
 

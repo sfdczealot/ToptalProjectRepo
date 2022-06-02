@@ -101,7 +101,7 @@
                         </lightning-layout-item>
                     </lightning-layout>
                 </template>
-                <div class="hrLine slds-align_absolute-center slds-m-vertical_large "></div>
+                <!--<div class="hrLine slds-align_absolute-center slds-m-vertical_large "></div>-->
             </template>
 
             <template if:true={secondPage}>
@@ -169,11 +169,11 @@
                         </lightning-layout-item>
                     </lightning-layout>
                 </template>
+            </template>
 
-                <!-- Create Appointmnet for New Patient-->
-                <template if:true={newPatient}>
-
-                </template>
+            <!-- Create Appointmnet for New Patient-->
+            <template if:true={newPatient}>
+                <c-toptal-new-patient-creation showpatientform={newPatient} ongotopreviouspage={handlePrevPageNavigation} onformrecords={handleNewPatientRecordCreation}></c-toptal-new-patient-creation>
             </template>
 
             <!-- Navigation between screens -->
@@ -223,7 +223,7 @@
                         <p>You are about to book an appointment with <span>Dr.{filteredData.physician}</span> at
                             <span> {calendarEventWrapper.selectedTime}</span> on
                             <span>{calendarEventWrapper.selectedDate} </span> and the
-                            consultation fee is ₹<span>{apptmtPrice}</span> for <span>{calendarEventWrapper.patientName}
+                            consultation fee is ₹<span>{apptmtPrice}</span> for <span>{calendarEventWrapper.patientName} 
                             </span>
                             and the email address is <span>{calendarEventWrapper.patientEmail}</span>
                         </p>
