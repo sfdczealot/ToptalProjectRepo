@@ -1,0 +1,19 @@
+Hi sir,<br>
+Your account has been created successfully. click <a href="https://zealot-dev-ed.lightning.force.com/lightning/r/Physician__c/"{!Physician__c.Id}"/view">here</a> to navigate to your account. Kindly do the following steps in your <span style="color:rgb(1 118 211);"> Google calendar </span> to make your calendar events available to our receptionist for the Appointment booking process.<br>
+
+Steps : 
+<ol>
+  <li>Go to your <span style="color:rgb(1 118 211);"> Google calendar </span> which is linked with this <span style="color:rgb(1 118 211);"> Gmail account </span> </li>
+
+  <li>In the right side panel <span style="color:rgb(1 118 211);"> My calendar  </span>  section will be there, when you hover your name 3 dots will be available. Click that dots </li>
+  <li>Select <span style="color:rgb(1 118 211);"> Settings and Sharing </span></li>
+<li>In  <span style="color:rgb(1 118 211);">  Share with specific people </span> section click <span style="color:rgb(1 118 211);"> Add people </span> Button, pop-up will trigger </li>
+
+<li>Copy and paste this Email Id - <span style="color:rgb(1 118 211);"> emperorprashanth@gmail.com </span></li>
+
+<li> Below that In permission dropdown Select <span style="color:rgb(1 118 211);">  Make changes to events </span></li>
+
+<li> click <span style="color:rgb(1 118 211);">  send </span></li>
+</ol>
+
+Note : After this Process, Receptionist can  <span style="color:rgb(1 118 211);"> view </span> and <span style="color:rgb(1 118 211);"> edit </span> your calendar events.

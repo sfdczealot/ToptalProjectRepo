@@ -1,0 +1,44 @@
+<template>
+    <template if:true={showPatientFrom}>
+        <lightning-spinner alternative-text="loading..." size="large" if:true={loadSpinner} variant="brand">
+        </lightning-spinner>
+        <lightning-layout
+            class="inputForm slds-align_absolute-center slds-grid slds-grid_vertical slds-gutters slds-m-horizontal_x-large slds-m-vertical_x-large ">
+            <lightning-layout class="row row1 slds-grid slds-gutters">
+                <lightning-layout-item flexibility="auto" class="slds-col slds-size_1-of-4">
+                    <label for="Name"> Name <span>*</span></label>
+                    <lightning-input required="true" data-id="name" type="text" variant="label-hidden" name="name"
+                        value={newPatient.name} onchange={handleInputChanges}></lightning-input>
+                </lightning-layout-item>
+
+                <lightning-layout-item flexibility="auto" class="slds-col slds-size_1-of-4">
+                    <label for="Age"> Age <span>*</span> </label>
+                    <lightning-input required="true" data-id="age" type="number" variant="label-hidden" name="age"
+                        value={newPatient.age} onchange={handleInputChanges}></lightning-input>
+                </lightning-layout-item>
+
+                <lightning-layout-item flexibility="auto" class="slds-col slds-size_1-of-4">
+                    <label for="Phone Number">Phone Number</label>
+                    <lightning-input type="tel" variant="label-hidden" name="phoneNumber" value={newPatient.phoneNumber}
+                        onchange={handleInputChanges}></lightning-input>
+                </lightning-layout-item>
+
+                <lightning-layout-item flexibility="auto" class="slds-col slds-size_1-of-4">
+                    <label for="Email"> Email <span>*</span> </label>
+                    <lightning-input data-id="email" type="text" variant="label-hidden" name="email"
+                        value={newPatient.email} onchange={handleInputChanges}></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+
+
+            <lightning-layout class="row row3 slds-grid slds-gutters">
+                <lightning-layout-item flexibility="auto" class="slds-col slds-size_1-of-2">
+                    <label for="Patient Address">Address</label>
+                    <lightning-textarea value={newPatient.address} name="address" variant="label-hidden"
+                        onchange={handleInputChanges}></lightning-textarea>
+                </lightning-layout-item>
+
+            </lightning-layout>
+        </lightning-layout>
+    </template>
+</template>

@@ -1,0 +1,2 @@
+Hi,
+Your appointment has been booked with <span style="color:rgb(1 118 211);">{!Appointment__c.Patient__c} </span> on  <span style="color:rgb(1 118 211);">  {!Appointment__c.00N7F00000Tl4cC} </span>. Reference number is  <span style="color:rgb(1 118 211);"> {!Appointment__c.Name} </span>

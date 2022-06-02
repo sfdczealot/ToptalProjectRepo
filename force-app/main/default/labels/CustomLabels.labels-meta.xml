@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Fields_To_Be_Tracked_In_Account</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Fields To Be Tracked In Account</shortDescription>
+        <value>Source__c,Source_Date__c</value>
+    </labels>
+    <labels>
+        <fullName>Physician_Available_time</fullName>
+        <categories>Available time, medical clinic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Physician Available time</shortDescription>
+        <value>9.00 AM - 12.00 PM,2.00 PM - 5.00 PM</value>
+    </labels>
+    <labels>
+        <fullName>RecordsPerPage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RecordsPerPage</shortDescription>
+        <value>10</value>
+    </labels>
+    <labels>
+        <fullName>Specialization_Names</fullName>
+        <categories>Specialization Names, Medical clinic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Specialization Names</shortDescription>
+        <value>None,Cardiology,Deititian,Dentistry,ENT,Nuclear medicine</value>
+    </labels>
+    <labels>
+        <fullName>TE_ExcludeObject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TE_ExcludeObject</shortDescription>
+        <value>name,apexpage,partner,approval,accountshare,leadshare,site,queuesobject,prm_notes_and_attachment__share,participating_organizations__c 
+,attachment,datatype,apexclass,apextrigger</value>
+    </labels>
+    <labels>
+        <fullName>TE_SetupObjects</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TE_SetupObjects</shortDescription>
+        <value>user,recordtype</value>
+    </labels>
+    <labels>
+        <fullName>Toptal_AfternoonSlots</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Toptal Afternoon Slots</shortDescription>
+        <value>2.00PM,2.30PM,3.00PM,3.30PM,4.00PM,4.30PM,5.00PM</value>
+    </labels>
+    <labels>
+        <fullName>Toptal_AvailabilityNo</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Toptal Availability No</shortDescription>
+        <value>No</value>
+    </labels>
+    <labels>
+        <fullName>Toptal_AvailabilityYes</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Toptal Availability Yes</shortDescription>
+        <value>Yes</value>
+    </labels>
+    <labels>
+        <fullName>Toptal_AvailableSlots</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Toptal Available Slots</shortDescription>
+        <value>9.00 AM - 12.00 PM,2.00 PM - 5.00 PM</value>
+    </labels>
+    <labels>
+        <fullName>Toptal_CalendarCalloutURL</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Toptal Calendar Callout URL</shortDescription>
+        <value>callout:Google_Calendar/calendar/v3/calendars/</value>
+    </labels>
+    <labels>
+        <fullName>Toptal_MorningSlots</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Toptal Morning Slots</shortDescription>
+        <value>9.00AM,9.30AM,10.00AM,10.30AM,11.00AM,11.30AM,12.00PM</value>
+    </labels>
+</CustomLabels>

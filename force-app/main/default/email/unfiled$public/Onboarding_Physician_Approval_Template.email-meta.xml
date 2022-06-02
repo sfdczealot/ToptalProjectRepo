@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Physician Approval Template</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Onboarding Physician Approval Template</name>
+    <style>none</style>
+    <subject>Onboarding Physician Approval Mail</subject>
+    <textOnly>Hi sir,
+Your account has been created successfully. Kindly do the following steps in your  Google calendar  to make your calendar events available to our receptionist for the Appointment booking process.
+
+Steps :
+
+1. Go to your  Google calendar  which is linked with this  Gmail account
+2. In the right side panel  My calendar  section will be there, when you hover your name 3 
+    dots will be available. Click that dots
+3. Select  Settings and Sharing
+4. In  Share with specific people  section click  Add people  Button, pop-up will trigger
+5. Copy and paste this Email Id -  emperorprashanth@gmail.com
+6. Below that In permission dropdown Select  Make changes to events
+7. click  send
+
+Note : After this Process, Receptionist can  view  and  edit  your calendar events.</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

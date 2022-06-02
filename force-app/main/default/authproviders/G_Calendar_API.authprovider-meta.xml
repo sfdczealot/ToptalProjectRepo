@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuthProvider xmlns="http://soap.sforce.com/2006/04/metadata">
+    <authorizeUrl>https://accounts.google.com/o/oauth2/auth?access_type=offline&amp;approval_prompt=force</authorizeUrl>
+    <consumerKey>589328609647-g6q71j1qqhj4tado2f0m2f7ckpejk894.apps.googleusercontent.com</consumerKey>
+    <consumerSecret>bwrwvM3rRk2wF/FYHGtfXHKP7vtIEeFunaGV0V6jypb11YPauL/j6A==</consumerSecret>
+    <defaultScopes>calendar</defaultScopes>
+    <friendlyName>G-Calendar API</friendlyName>
+    <includeOrgIdInIdentifier>false</includeOrgIdInIdentifier>
+    <providerType>OpenIdConnect</providerType>
+    <sendAccessTokenInHeader>true</sendAccessTokenInHeader>
+    <sendClientCredentialsInHeader>false</sendClientCredentialsInHeader>
+    <sendSecretInApis>true</sendSecretInApis>
+    <tokenUrl>https://oauth2.googleapis.com/token</tokenUrl>
+</AuthProvider>

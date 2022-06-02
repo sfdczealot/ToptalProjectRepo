@@ -1,0 +1,13 @@
+*{
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.badge{
+    display: flex;
+    align-items: center;
+    background-color: #dc0303;
+    width: fit-content;
+    padding: 8px 13px;
+    border-radius: 4px;
+    color: white;
+}

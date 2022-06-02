@@ -1,0 +1,351 @@
+/* .filterRow lightning-combobox{
+    width: 15%;
+}
+
+.filterRow lightning-input{
+    width: 20%;
+} */
+
+*{
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.headerHead {
+    font-weight: 600;
+    font-size: 28px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.headerP{
+    font-size: 14px;
+    color: rgb(82, 82, 82);
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+lightning-card{
+    min-height: 100vh;
+}
+
+.calender{
+    height: 200px;
+}
+.calenderDiv{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    min-width: 350px;
+    flex-wrap: wrap;
+}
+
+.hrLine{
+    width: 97%;
+    height: 1.5px;
+    border-radius: 50px;
+    background-color: rgb(234 234 234);
+}
+
+.currentPage .colorLine{
+    height: 14px;
+    border-radius: 3px;
+    background-color: rgb(1 118 211);
+    margin-top: 6px;
+}
+
+.linePage label,.currentPage label {
+    color: rgb(1 118 211);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.linePage .colorLine{
+    height: 14px;
+    border-radius: 3px;
+    background-color: rgb(242 242 242);
+    margin-top: 6px;
+}
+
+/* .calenderDiv{
+    min-height: 100px;
+} */
+
+.TextSide p{
+    /* width: 70%; */
+    font-size: 17px; 
+}
+
+.TextSide span{
+    font-weight: 600;
+    font-size: 16px;
+    color: rgb(1 118 211);
+}
+
+.modalBody span{
+    font-weight: 600;
+    color: rgb(1 118 211);
+}
+
+.inputForm lightning-input,.inputForm lightning-textarea{
+    margin-top: 10px;
+}
+
+.inputForm{
+    --sds-c-textarea-sizing-min-height: 120px;
+}
+
+.inputForm .row{
+    margin-bottom: 20px;
+    width: 85%;
+}
+
+.patientFormHead{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 23px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.confirmForm{
+    font-size: 28px;
+    font-weight: 600;
+    color: rgb(1 118 211);
+    min-height: 400px !important;
+}
+
+.wrapper{
+    min-height: 560px !important;
+}
+
+.inputFields{
+    width: 58%;
+}
+
+.inputFields lightning-input{
+    margin-top: 10px;
+    margin-bottom: 20px;
+} 
+ 
+.inputFields label{
+    font-weight: 600;
+    font-size: 16px;
+}
+.selectedPatient{
+    border: 2px solid #e7e7e7;
+    border-radius: 5px;
+    width: 70%;
+    height: 200px;
+    overflow: auto;
+}
+
+.exPatientsP{
+    font-size: 18px;
+    font-weight: 600;
+    color:rgb(1 118 211)  ;
+}
+
+.selectedPatient a{
+    color: black;
+    font-size: 17px;
+    cursor: pointer;
+    text-decoration: none !important;
+    
+} 
+
+.selectedPatient .childExist{
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.clickBackground {
+    background: #d4d4d4 !important;
+    /* border-left: 5px solid #0176d3; */
+    border-radius: 3px;
+}
+
+.hoverable:hover{
+    background-color: #ebebeb;
+    border-radius: 3px;
+}
+
+.row span{
+    color: red;
+}
+
+.refNo{
+    font-size: 16px;
+    font-weight: 500;
+    color:rgb(1 118 211)  ;
+}
+
+.navButtons{
+    position: relative;
+    bottom: 20px;
+}
+
+.spinnerDiv{
+    position: relative;
+}
+
+.progressStep{
+    width: 100% !important;
+} 
+
+
+
+.FiltersWrapper{
+    display: flex;
+    justify-content: space-between;
+}
+
+.leftSideFilters{
+    display: flex;
+    flex-direction: column;
+} 
+
+.rightSideFilters{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.firstRowFilters, .secondRowFilters{
+    display: flex;
+}
+
+.firstRowFilters div, secondRowFilters div {
+    margin-right: 30%;
+}
+
+.oldInput{
+    display: flex;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 940px) {
+ .headerHead{
+    font-weight: 600;
+    font-size: 23px;
+    font-family: 'Segoe UI', sans-serif;
+ }
+
+ .filters{
+    display: flex;
+    flex-direction: column;
+ }
+
+ .filters div{
+     width: 100% !important;
+     margin-bottom: 15px;
+ }
+
+ .secondRow{
+     display: flex;
+     flex-direction: column;
+     margin: 0 !important;
+ } 
+
+ .secondRow div{
+     padding-right: 0 !important;
+     padding-left: 0 !important;
+ }
+
+ .exinputForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100% !important;
+    margin: 0 !important;
+ }
+
+ .oldInput {
+     width: 100% !important;    
+ }
+
+ .listshower{
+     margin-top: 20px;
+     width: 95% !important;
+ }
+
+ .row{
+     display: flex;
+     flex-direction: column;
+     width: 100% !important;
+ }
+
+ .row lightning-layout-item{
+     margin-bottom: 10px !important;
+     width: 100% !important;
+ }
+
+ .selectedPatient{
+    width: 100% !important;
+}
+
+.exButton{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.exButton lightning-button{
+    margin: 0;
+    margin-bottom: 10px;
+    
+}
+
+.inputFields{
+    width: 95% !important;
+}
+
+.listShowerWrapper{
+    width: 100%;
+}
+
+.refNo{
+    font-size: 15px;
+    font-weight: 500;
+    color:rgb(1 118 211)  ;
+}
+
+.resetBtnDiv{
+    display: flex;
+    justify-content: center;
+}
+
+}
+
+
+
+
+@media only screen and (max-width: 550px){
+.headerHead{
+    font-weight: 600;
+    font-size: 19px;
+    font-family: 'Segoe UI', sans-serif;
+ }
+
+ .calenderDiv{
+     margin-left: 14px !important;
+ } 
+}

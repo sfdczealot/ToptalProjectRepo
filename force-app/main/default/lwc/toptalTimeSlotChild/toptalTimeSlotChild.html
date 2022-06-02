@@ -1,0 +1,41 @@
+<template>
+        <template if:true={available}>
+        <lightning-layout-item>
+                <div class="bookBtn">
+                    <div class="button">
+                        <lightning-button variant="brand" label={time} title="Book Appointment" onclick={getTime}></lightning-button>
+                    </div>
+                </div>
+        </lightning-layout-item>
+        </template>
+
+<template if:false={available}>
+        <lightning-layout-item>
+                <div class="bookedBtn">
+                    <div class="badge">
+                        <p> {time} </p>
+                    </div>
+                </div>
+        </lightning-layout-item>
+        </template>
+
+<!-- <lightning-layout-item class="textSide slds-col slds-size_1-of-2" >
+            <p class="slds-m-left_medium" data-id={time}>
+                {time} - <span> {subject} </span>
+            </p> 
+        </lightning-layout-item>
+
+        <lightning-layout-item class="slds-col slds-size_1-of-2 slds-text-align_right">
+            <template if:true={available}>
+                <lightning-button variant="brand" label="Book" title="Book appointment" onclick={BookAppointment}></lightning-button>
+            </template>
+            <template if:false={available}> 
+                <div class="bookedBtn">
+                    <div class="badge">
+                        <p> Booked </p>
+                    </div>
+                </div>
+            </template>
+        </lightning-layout-item>  -->
+
+</template>

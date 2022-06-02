@@ -1,0 +1,255 @@
+<template>
+    <lightning-card class="slds-p-around_large">
+
+        <div class="wrapper">
+            <div class="header slds-m-top_large">
+                <p class="headerHead">Search Doctor, Make an Appointment</p>
+                <p class="headerP">Discover the Best Doctor to treat Patients</p>
+            </div>
+            <lightning-layout class="slds-p-horizontal_xx-large slds-p-top_xx-large">
+                <lightning-layout-item class="progressStep">
+                    <lightning-progress-indicator current-step={currentStep} type="path" variant="base">
+                        <lightning-progress-step label="Time" value="1"></lightning-progress-step>
+                        <lightning-progress-step label="Details" value="2"></lightning-progress-step>
+                    </lightning-progress-indicator>
+                </lightning-layout-item>
+            </lightning-layout>
+
+
+            <template if:true={firstPage}>
+                <div class="filters slds-grid slds-gutters slds-m-horizontal_xx-large slds-m-top_x-large ">
+                    <!--Specialization Selection-->
+                    <div class=" slds-col slds-size_1-of-5 spinnerDiv">
+                        <lightning-combobox name="specialization" label="Specialization"
+                            value={filteredData.specialization} placeholder="Select Specialization"
+                            options={specializationOptions} variant="label-hidden"
+                            onchange={handleSpecializationChange}>
+                        </lightning-combobox>
+                    </div>
+                    <!--Physician Selection-->
+                    <div class=" slds-col slds-size_1-of-5 spinnerDiv">
+                        <lightning-combobox name="physician" label="Physician" value={filteredData.physician}
+                            placeholder="Select Physician" options={physicianOptions} variant="label-hidden"
+                            onchange={handlePhysicianChange} disabled={filterPhysician}>
+                        </lightning-combobox>
+                    </div>
+                    <!--Date and TimeSlot Selection-->
+                    <div class="slds-col slds-size_2-of-5">
+                        <div class="secondRow slds-grid slds-gutters">
+                            <!--Physician has not shared his calendar-->
+                            <template if:true={hideCalender}>
+                                <div class="slds-col slds-size_1-of-1">
+                                    <p>An email already sent to this physician regarding approval of exposing his/her
+                                        calendar to book appointments. If you still don't see the calendar, please
+                                        contact him directly to seek his approval</p>
+                                </div>
+                            </template>
+                            <!--Date Selection-->
+                            <template if:true={showCalender}>
+                                <div class=" slds-col slds-size_1-of-2">
+                                    <lightning-input type="date" variant="label-hidden" name="date"
+                                        label="Available date" placeholder="Select date to check availability"
+                                        onchange={handleDateChange} data-id="date" value={filteredData.date}>
+                                    </lightning-input>
+                                </div>
+                                <!--TimeSlot Selection-->
+                                <div class=" slds-col slds-size_1-of-2">
+                                    <lightning-combobox name="time" label="Choose Time" value={filteredData.time}
+                                        placeholder="Select Time" options={timeSlots} variant="label-hidden"
+                                        onchange={handleTimeSlotChange} disabled={filterTime}>
+                                    </lightning-combobox>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    <!--Reset Filters-->
+                    <div class="resetBtnDiv slds-col slds-size_1-of-5 slds-text-align_right">
+                        <a onclick={resetFilters}>
+                            <lightning-button-icon icon-name="utility:refresh" variant="brand" alternative-text="Reset">
+                            </lightning-button-icon>
+                        </a>
+                    </div>
+                </div>
+                <!--Show Time Slots based on his Calendar Event-->
+                <template if:true={showTimeSlots}>
+                    <lightning-layout class="calenderDiv slds-grid slds-gutters slds-m-left_xx-large">
+                        <template if:true={showSpinner}>
+                            <lightning-spinner class="slds-m-top_x-large slds-text-align_left " variant="brand"
+                                alternative-text="Loading" size="small"></lightning-spinner>
+                        </template>
+                        <template if:false={showSpinner}>
+                            <template if:true={timeSlotListResponse} for:each={timeSlotListResponse} for:item="tSlot">
+                                <lightning-layout-item key={tSlot.timeSlot}
+                                    class="CalenderSide slds-col slds-size_1-of-10 slds-m-top_large">
+                                    <c-time-slot-child time={tSlot.timeSlot} availability={tSlot.availability}
+                                        onbookingdetails={bookAppointment}></c-time-slot-child>
+                                </lightning-layout-item>
+                            </template>
+                        </template>
+                    </lightning-layout>
+                </template>
+                <!-- Show Appoinment Details -->
+                <template if:true={optedBooking}>
+                    <lightning-layout>
+                        <lightning-layout-item
+                            class="slds-m-horizontal_xx-large TextSide slds-grid slds-gutters slds-m-top_x-large">
+                            <p>You have opted to book an appointment with <span>Dr.{filteredData.physician}</span> at
+                                <span> {calendarEventWrapper.selectedTime} </span> on <span> {filteredData.date}
+                                </span>. The consultation fee is <span> ₹{apptmtPrice} </span>
+                                Please provide your details in the form in next page to proceed with the booking.
+                            </p>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+                <div class="hrLine slds-align_absolute-center slds-m-vertical_large "></div>
+            </template>
+
+            <template if:true={secondPage}>
+                <!-- Patient Details -->
+                <lightning-layout class="patientFormHead slds-m-vertical_large">
+                    <p>Patient Input Form</p>
+                </lightning-layout>
+                <!-- Create Appointmnet for Existing Patient-->
+                <template if:true={existingPatientPage}>
+                    <lightning-layout
+                        class="exinputForm slds-grid slds-gutters slds-grid_vertical-align-end slds-m-horizontal_large slds-m-vertical_x-large">
+                        <!-- Search Existing Patient with Patient name or email-->
+                        <lightning-layout-item flexibility="auto"
+                            class="slds-col slds-size_1-of-2 oldInput slds-grid_align-center">
+                            <div class="inputFields">
+                                <div>
+                                    <label for="Name"> Patient Name</label>
+                                    <lightning-input type="text" variant="label-hidden" name="Name"
+                                        value={existingPatient.Name} onchange={handleSearchPatient}></lightning-input>
+                                </div>
+                                <div>
+                                    <label for="Email"> Patient Email</label>
+                                    <lightning-input type="text" variant="label-hidden" name="EmailId" data-id="EmailId"
+                                        onchange={handleSearchPatient} value={existingPatient.EmailId}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-align_absolute-center slds-m-top_large ">
+                                    <lightning-button variant="brand" label="Search" title="Search"
+                                        onclick={searchExistingPatients}></lightning-button>
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+                        <!-- Display Patient Search Results-->
+                        <lightning-layout-item flexibility="auto" class="listShowerWrapper slds-col slds-size_1-of-2">
+                            <div class="listshower slds-grid slds-grid_vertical slds-align_absolute-center">
+                                <div class="exPatientsP">
+                                    <p>Existing patients</p>
+                                </div>
+                                <div class="selectedPatient slds-m-top_large">
+                                    <template if:true={filterdPatients} for:each={filterdPatients} for:item="patient">
+                                        <div key={patient.Id} class="hoverable childExist">
+                                            <a class="hoverable slds-p-around_medium slds-align_absolute-center "
+                                                data-id={patient.Id} data-name={patient.Name}
+                                                data-email={patient.Email_Id__c} onclick={handleselectedPatient}>
+                                                <div>
+                                                    {patient.Name} - {patient.Email_Id__c}
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </template>
+                                </div>
+                                <!-- Book Appointmentfor New/Existing Patient-->
+                                <div class="exButton slds-m-top_large">
+                                    <!-- Book Appointment based on Patient Search Results-->
+                                    <lightning-button class="slds-m-right_large" variant="brand"
+                                        label="Book Appointment" title="Book Appointment"
+                                        onclick={handleExistingPatientAppointment} disabled={disableBooking}>
+                                    </lightning-button>
+                                    <!-- Create new Appointment for patient-->
+                                    <lightning-button variant="neutral" label="New Patient" title="New Patient"
+                                        onclick={handleNewPatientCreation}>
+                                    </lightning-button>
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+
+                <!-- Create Appointmnet for New Patient-->
+                <template if:true={newPatient}>
+
+                </template>
+            </template>
+
+            <!-- Navigation between screens -->
+            <div class="navButtons slds-m-top_xx-large slds-m-horizontal_xx-large">
+                <lightning-layout horizontal-align="spread" class=" slds-m-top_x-large">
+                    <lightning-layout-item flexibility="auto">
+                        <template if:true={secondPage}>
+                            <lightning-button variant="brand" label="Previous" icon-name="utility:chevronleft"
+                                icon-position="left" onclick={navigateToPreviousPage}>
+                            </lightning-button>
+                        </template>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto">
+                        <template if:true={navigateNext}>
+                            <lightning-button variant="brand" label="Next" icon-name="utility:chevronright"
+                                icon-position="right" onclick={navigateToNextPage}></lightning-button>
+                        </template>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+            <!--Appointment confirmation with Reference number-->
+            <template if:true={isAppointmentCreated}>
+                <lightning-layout class="confirmForm slds-align_absolute-center slds-grid slds-grid_vertical">
+                    <lightning-icon icon-name="action:approval" size="large"></lightning-icon>
+                    <p>Appointment Created</p>
+                    <p class="refNo">Reference No : {referenceNo}</p>
+                </lightning-layout>
+            </template>
+        </div>
+
+
+
+        <!--Popup Modal for Appointment confirmation-->
+        <template if:true={openModal}>
+            <!-- Modal/Popup Box LWC starts here -->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box LWC header here -->
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Appointment Final
+                            Confirmation</h2>
+                    </header>
+                    <!-- Modal/Popup Box LWC body starts here -->
+                    <div class="slds-modal__content slds-p-around_large edit-modal-body modalBody"
+                        id="modal-content-id-3">
+                        <p>You are about to book an appointment with <span>Dr.{filteredData.physician}</span> at
+                            <span> {calendarEventWrapper.selectedTime}</span> on
+                            <span>{calendarEventWrapper.selectedDate} </span> and the
+                            consultation fee is ₹<span>{apptmtPrice}</span> for <span>{calendarEventWrapper.patientName}
+                            </span>
+                            and the email address is <span>{calendarEventWrapper.patientEmail}</span>
+                        </p>
+                    </div>
+                    <!-- Modal/Popup Box LWC footer starts here -->
+                    <footer class="slds-modal__footer">
+                        <div class="footer-sec slds-align_absolute-center">
+                            <!--To cancel the Appointment confirmation-->
+                            <lightning-button variant="neutral" label="Cancel" title="Cancel" onclick={closeModal}
+                                class="slds-m-right_large">Cancel</lightning-button>
+                            <!--Appointment confirmation for Existing patient-->
+                            <template if:true={apptmtForExistingPatient}>
+                                <lightning-button variant="brand" label="Proceed" title="Proceed"
+                                    onclick={updateExistingPatient}>Proceed</lightning-button>
+                            </template>
+                            <!--Appointment confirmation for New patient-->
+                            <template if:true={apptmtForNewPatient}>
+                                <lightning-button variant="brand" label="Proceed" title="Proceed" onclick={addPatient}>
+                                    Proceed</lightning-button>
+                            </template>
+                        </div>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+
+</template>

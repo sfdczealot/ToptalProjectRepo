@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This is used to send notification when appointment is created for patient</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Patient appointment notification template</name>
+    <style>none</style>
+    <subject>Appointment Booked</subject>
+    <textOnly>Hi, Your appointment has been booked with {!Appointment__c.Patient__c} on  {!Appointment__c.00N7F00000Tl4cC} . Reference number is  {!Appointment__c.Name}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
